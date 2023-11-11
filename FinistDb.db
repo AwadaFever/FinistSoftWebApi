@@ -1,0 +1,25 @@
+--
+-- Файл сгенерирован с помощью SQLiteStudio v3.4.4 в Пт ноя 10 15:51:17 2023
+--
+-- Использованная кодировка текста: System
+--
+PRAGMA foreign_keys = off;
+BEGIN TRANSACTION;
+
+-- Таблица: Card
+CREATE TABLE IF NOT EXISTS Card (Id INTEGER PRIMARY KEY NOT NULL UNIQUE, DateOpen TEXT NOT NULL, DateClosed NOT NULL, Number TEXT NOT NULL UNIQUE, CVV INTEGER (3) UNIQUE NOT NULL, Image TEXT NOT NULL);
+
+-- Таблица: Contract
+CREATE TABLE IF NOT EXISTS Contract (Id INTEGER PRIMARY KEY UNIQUE, UserId INTEGER NOT NULL REFERENCES User (Id), Number TEXT, DateOpen TEXT NOT NULL, DateClosed TEXT, State TEXT NOT NULL, Amount REAL NOT NULL);
+
+-- Таблица: Favourite
+CREATE TABLE IF NOT EXISTS Favourite (Id INTEGER PRIMARY KEY NOT NULL UNIQUE, Name TEXT (20) NOT NULL, UserId INTEGER REFERENCES User (Id) NOT NULL, TransactionId INTEGER NOT NULL);
+
+-- Таблица: TransactionHistory
+CREATE TABLE IF NOT EXISTS TransactionHistory (Id PRIMARY KEY UNIQUE NOT NULL, SenderId INTEGER NOT NULL REFERENCES User (Id), ReciverId INTEGER NOT NULL REFERENCES User (Id), Sum INTEGER NOT NULL, TransactionDate TEXT NOT NULL);
+
+-- Таблица: User
+CREATE TABLE IF NOT EXISTS User (Id INTEGER PRIMARY KEY UNIQUE NOT NULL, Login TEXT UNIQUE NOT NULL, Passwrod TEXT (30) NOT NULL, FirstName TEXT (30) NOT NULL, SecondName TEXT (30) NOT NULL, LastName TEXT (30), Brithday TEXT (10) NOT NULL);
+
+COMMIT TRANSACTION;
+PRAGMA foreign_keys = on;
